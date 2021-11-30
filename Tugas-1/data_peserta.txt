@@ -1,0 +1,6 @@
+Data Peserta Bootcamp Digital Skill - Golang Backend Development
+1. Nama: Mohammad Akmaluddin Novianto   
+2. Email: akmalseferagic@gmail.com
+3. Sistem Operasi yang digunakan: Mac Os High Sierra
+4. Akun Gitlab/Github: akmalseferagic
+5. Akun Telegram: mhmdakmaln
