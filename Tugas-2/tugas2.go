@@ -9,17 +9,17 @@ import (
 func main() {
 
 	//Soal nomor 1
+	fmt.Println("=========== soal no 1 ==============")
 	nama1 := "Bootcamp"
 	nama2 := "Digital"
 	nama3 := "Skill"
 	nama4 := "Sanbercode"
 	nama5 := "Golang"
 
-	nama := nama1 + " " + nama2 + " " + nama3 + " " + nama4 + " " + nama5
-
-	fmt.Println(nama)
+	fmt.Println(nama1, nama2, nama3, nama4, nama5)
 
 	//soal nomor 2
+	fmt.Println("=========== soal no 2 ==============")
 	halo := "Halo Dunia"
 	var find = "Dunia"
 	var replaceWith = "Golang"
@@ -28,6 +28,7 @@ func main() {
 	fmt.Println(newHalo)
 
 	//Soal nomor 3
+	fmt.Println("=========== soal no 3 ==============")
 	var kataPertama = "saya"
 	var kataKedua = "senang"
 	var kataKetiga = "belajar"
@@ -43,36 +44,29 @@ func main() {
 
 	var newkataempat = strings.Replace(kataKeempat, find2, replaceWith2, 1)
 
-	kataSemua := kataPertama + " " + kataKedua + " " + newkatatiga + " " + newkataempat
-
-	fmt.Println(kataSemua)
+	fmt.Println(kataPertama, kataKedua, newkatatiga, newkataempat)
 
 	//Soal Nomor 4
+	fmt.Println("=========== soal no 4 ==============")
 	var angkaPertama = "8"
 	var angkaKedua = "5"
 	var angkaKetiga = "6"
 	var angkaKeempat = "7"
 
-	var num, err = strconv.Atoi(angkaPertama + angkaKedua + angkaKetiga + angkaKeempat)
+	newAngka1, _ := strconv.Atoi(angkaPertama)
+	newAngka2, _ := strconv.Atoi(angkaKedua)
+	newAngka3, _ := strconv.Atoi(angkaKetiga)
+	newAngka4, _ := strconv.Atoi(angkaKeempat)
 
-	if err == nil {
-		num = 8 + 5 + 6 + 7
-		fmt.Println(num)
-	}
+	fmt.Println(newAngka1 + newAngka2 + newAngka3 + newAngka4)
 
 	//Soal nomor 5
+	fmt.Println("=========== soal no 5 ==============")
 	kalimat := "halo halo bandung"
 	angka := 2021
 
-	var find3 = "halo halo"
-	var replaceWith3 = "Hi Hi"
+	kalimat = `"` + strings.ReplaceAll(kalimat, "halo", "hi") + `"` + ` -`
 
-	var newKalimat = strings.Replace(kalimat, find3, replaceWith3, 1)
-
-	fmt.Print(" '' ")
-	fmt.Print(newKalimat)
-	fmt.Print(" '' ")
-	fmt.Print(" - ")
-	fmt.Println(angka)
+	fmt.Println(kalimat, angka)
 
 }
