@@ -42,6 +42,8 @@ func main() {
 	var nilaiDoe = 50
 
 	fmt.Println("---- Niliai John ----")
+	fmt.Println("nilai john adalah : ", nilaiJohn)
+	fmt.Print("maka nilai dia mendakapatkan ")
 	if nilaiJohn >= 80 {
 		fmt.Println("A")
 	} else if nilaiJohn >= 70 {
@@ -55,6 +57,8 @@ func main() {
 	}
 
 	fmt.Println("---- Niliai Doe ----")
+	fmt.Println("nilai Doe adalah : ", nilaiDoe)
+	fmt.Print("maka nilai dia mendakapatkan ")
 	if nilaiDoe >= 80 {
 		fmt.Println("A")
 	} else if nilaiDoe >= 70 {
@@ -73,33 +77,35 @@ func main() {
 	var bulan = 10
 	var tahun = 1998
 
+	fmt.Print(tanggal, " ")
+
 	switch bulan {
 	case 1:
-		fmt.Println("Januari")
+		fmt.Print("Januari ")
 	case 2:
-		fmt.Println("Februari")
+		fmt.Print("Februari ")
 	case 3:
-		fmt.Println("Maret")
+		fmt.Print("Maret ")
 	case 4:
-		fmt.Println("April")
+		fmt.Print("April ")
 	case 5:
-		fmt.Println("Mei")
+		fmt.Print("Mei")
 	case 6:
-		fmt.Println("Juni")
+		fmt.Print("Juni ")
 	case 7:
-		fmt.Println("Juli")
+		fmt.Print("Juli ")
 	case 8:
-		fmt.Println("Agustus")
+		fmt.Print("Agustus ")
 	case 9:
-		fmt.Println("September")
+		fmt.Print("September ")
 	case 10:
-		fmt.Println("Oktober")
+		fmt.Print("Oktober ")
 	case 11:
-		fmt.Println("November")
+		fmt.Print("November ")
 	case 12:
-		fmt.Println("Desember")
+		fmt.Print("Desember ")
 	}
 
-	fmt.Println(tanggal, bulan, tahun)
+	fmt.Println(tahun)
 
 }
