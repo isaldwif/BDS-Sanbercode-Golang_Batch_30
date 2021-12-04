@@ -97,5 +97,4 @@ func main() {
 		fmt.Println(item)
 	}
 
-	asdakjsbakjsdbakjsb
 }
