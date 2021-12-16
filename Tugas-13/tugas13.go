@@ -1,6 +1,6 @@
 package main
 
-//ini ga berjalan sama sekali hehe
+//ini ga berjalan sama sekali
 import (
 	"encoding/json"
 	"fmt"
@@ -70,7 +70,7 @@ func PostMahasiswa(rw http.ResponseWriter, r *http.Request) {
 
 	}
 
-	http.Error(rw, "NOT ALLOWED", http.StatusMethodNotAllowed)
+	http.Error(rw, "NOT FOUND", http.StatusMethodNotAllowed)
 	return
 
 }
@@ -90,6 +90,8 @@ func getMahasiswa(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Error(w, "ERROR....", http.StatusNotFound)
 }
+
+// pada function main
 
 func main() {
 	//method
