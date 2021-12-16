@@ -137,4 +137,8 @@ func main() {
 	fmt.Println("luas lingkaran adalah :", luasLigkaran, "cm")
 	fmt.Println("keliling lingkaran adalah :", kelilingLingkaran, "cm")
 
+	//soal no 6
+	fmt.Println(" ")
+	fmt.Println("=========== soal no 5 ==============")
+
 }
