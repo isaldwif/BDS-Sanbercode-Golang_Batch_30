@@ -16,22 +16,6 @@ type NilaiMahasiswa struct {
 
 var nilaiNilaiMahasiswa = []NilaiMahasiswa{}
 
-func getMahasiswa(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
-		dataNilai, err := json.Marshal(nilaiNilaiMahasiswa)
-
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write(dataNilai)
-		return
-	}
-	http.Error(w, "ERROR....", http.StatusNotFound)
-}
-
 //Post
 func PostMahasiswa(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
@@ -86,12 +70,26 @@ func PostMahasiswa(rw http.ResponseWriter, r *http.Request) {
 
 	}
 
-	http.Error(rw, "NOT FOUND", http.StatusNotFound)
+	http.Error(rw, "NOT ALLOWED", http.StatusMethodNotAllowed)
 	return
 
 }
 
-// pada function main
+func getMahasiswa(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		dataNilai, err := json.Marshal(nilaiNilaiMahasiswa)
+
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(dataNilai)
+		return
+	}
+	http.Error(w, "ERROR....", http.StatusNotFound)
+}
 
 func main() {
 	//method
