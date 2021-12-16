@@ -10,58 +10,69 @@ import (
 )
 
 type NilaiMahasiswa struct {
-	Nama, MataKuliah, IndeksNilai string `json:"Nama", "Matakuliah", "IndeksNilai"`
-	Nilai, ID                     uint   `json:"Nilai", "ID"`
+	Nama        string `json:"nama"`
+	MataKuliah  string `json:"matakuliah"`
+	IndeksNilai string `json:"indeks_nilai"`
+	Nilai       uint   `json:"nilai"`
+	ID          uint   `json: "id"`
 }
 
 var nilaiNilaiMahasiswa = []NilaiMahasiswa{}
 
+func Auth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		username, password, ok := r.BasicAuth()
+
+		// exception user dan password
+		if !ok {
+			rw.Write([]byte("username dan password tidak boleh kosong!"))
+			return
+		}
+
+		// validasi auth
+		if username == "admin" && password == "admin" {
+			next.ServeHTTP(rw, r)
+			return
+		}
+
+		rw.Write([]byte("username dan password salah!"))
+	})
+}
+
 //Post
-func PostMahasiswa(rw http.ResponseWriter, r *http.Request) {
+func postMahasiswa(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
-	var newNilai = NilaiMahasiswa{}
 
 	if r.Method == "POST" {
+		var newNilai = NilaiMahasiswa{
+			ID: uint(len(nilaiNilaiMahasiswa) + 1),
+		}
 		if r.Header.Get("Content-Type") == "application/json" {
 			decodeJSON := json.NewDecoder(r.Body)
 			//by body json
-			if err := decodeJSON.Decode(&nilaiNilaiMahasiswa); err != nil {
+			if err := decodeJSON.Decode(&newNilai); err != nil {
 				log.Fatal(err)
 			}
 		} else {
 			//by form
-			getId := r.PostFormValue("ID")
-			id, _ := strconv.Atoi(getId)
-			fmt.Println(id)
-			getNama := r.PostFormValue("Nama")
-			nama := getNama
-			fmt.Println(nama)
-			getMatkul := r.PostFormValue("Matakuliah")
-			matkul := getMatkul
-			fmt.Println(matkul)
-			getIndeks := r.PostFormValue("IndeksNilai")
-			Indeks := getIndeks
-			fmt.Println(Indeks)
-			getNilai := r.PostFormValue("Nilai")
+			nama := r.FormValue("nama")
+			matkul := r.FormValue("matakuliah")
+			getNilai := r.FormValue("nilai")
 			nilai, _ := strconv.Atoi(getNilai)
-			fmt.Println(nilai)
 
 			newNilai.Nama = nama
 			newNilai.MataKuliah = matkul
+			newNilai.Nilai = uint(nilai)
 
 		}
 
-		if newNilai.Nilai >= 80 {
-			newNilai.IndeksNilai = "Indeksnya A "
-		} else if newNilai.Nilai >= 70 {
-			newNilai.IndeksNilai = "Indeksnya B "
-		} else if newNilai.Nilai >= 60 {
-			newNilai.IndeksNilai = "Indeksnya C "
-		} else if newNilai.Nilai >= 50 {
-			newNilai.IndeksNilai = "Indeksnya D "
-		} else if newNilai.Nilai < 50 {
-			newNilai.IndeksNilai = "Indeksnya E "
+		if newNilai.Nilai > 100 {
+			http.Error(rw, "Nilai tidak boleh diinput lebih dari 100", http.StatusBadRequest)
+			return
 		}
+
+		//get indeks berdasarkan nilai
+		newNilai.IndeksNilai = getIndeksNilai(newNilai.Nilai)
 
 		nilaiNilaiMahasiswa = append(nilaiNilaiMahasiswa, newNilai)
 		dataNilai, _ := json.Marshal(newNilai)
@@ -75,6 +86,7 @@ func PostMahasiswa(rw http.ResponseWriter, r *http.Request) {
 
 }
 
+//fungsiGET
 func getMahasiswa(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		dataNilai, err := json.Marshal(nilaiNilaiMahasiswa)
@@ -91,12 +103,26 @@ func getMahasiswa(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "ERROR....", http.StatusNotFound)
 }
 
-// pada function main
+//fungsi indeks
+func getIndeksNilai(nilai uint) string {
+	if nilai >= 80 {
+		return "A"
+	} else if nilai >= 70 {
+		return "B"
+	} else if nilai >= 60 {
+		return "C"
+	} else if nilai >= 50 {
+		return "D"
+	} else if nilai < 50 {
+		return "E"
+	}
+	return ""
+}
 
 func main() {
 	//method
 	http.HandleFunc("/get_mahasiswa", getMahasiswa)
-	http.HandleFunc("/post_nilai", PostMahasiswa)
+	http.Handle("/post_nilai", Auth(http.HandlerFunc(postMahasiswa)))
 
 	fmt.Println("server running at http://localhost:8080")
 
